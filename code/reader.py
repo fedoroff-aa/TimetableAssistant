@@ -58,14 +58,14 @@ class EducationalPrograms:
                                     class_number = cell_value[:2] if cell_value[:2].isdigit() else cell_value[0]
                                     class_number = class_number.strip()
 
-                                    class_letters = [x.strip() for x in
+                                    class_letters = [x.strip().upper() for x in
                                                      cell_value[len(class_number):].split(',')]
 
                                     current_classes = [class_number + x for x in class_letters]
 
                                 else:
 
-                                    current_classes = [cell_value.replace('(', ' ').split()[0].strip()]
+                                    current_classes = [cell_value.replace('(', ' ').split()[0].strip().upper()]
 
                     elif True in [x[0] <= rows_c < x[1] for x in lesson_ranges_rows[i]] and cols_c == 1:
 
@@ -89,7 +89,7 @@ class EducationalPrograms:
 
                         if (lesson_names[rows_c], together) in current_lessons:
 
-                            current_lessons[(lesson_names[rows_c], together)] =\
+                            current_lessons[(lesson_names[rows_c], together)] = \
                                 current_lessons[(lesson_names[rows_c], together)] + int(cell_value)
 
                         else:
@@ -119,19 +119,34 @@ class EducationalPrograms:
 class Classrooms:
 
     def __init__(self, path_to_file):
-
         self.path_to_file = path_to_file
 
     def get_classrooms(self):
-
         data = Document(self.path_to_file).tables[0]
         classrooms = {}
 
         for i in range(1, len(data.rows)):
-
             classrooms[data.rows[i].cells[1].text] = educational_objects.Classroom(
                 data.rows[i].cells[1].text,
                 int(data.rows[i].cells[2].text)
             )
 
         return classrooms
+
+
+class ClassQuantities:
+
+    def __init__(self, path_to_file):
+        self.path_to_file = path_to_file
+
+    def get_quantities(self):
+        data = Document(self.path_to_file).tables[0]
+        quantity = {}
+
+        for i in range(1, len(data.rows)):
+            quantity[data.rows[i].cells[0].text] = (
+                int(data.rows[i].cells[1].text),
+                int(data.rows[i].cells[2].text),
+                data.rows[i].cells[3].text)
+
+        return quantity
