@@ -8,8 +8,6 @@ class Maker:
         self.classrooms = reader.Classrooms(path_to_classrooms).get_classrooms()
         self.educational_programs, self.lessons = reader.EducationalPrograms(path_to_edu_programs).get_programs()
         self.class_quantities = reader.ClassQuantities(path_to_quantity).get_quantities()
-        
-
 
     def make(self):
         pass
