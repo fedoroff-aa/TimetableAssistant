@@ -12,4 +12,6 @@ class Maker:
         print()
         print(*self.lessons, sep=', ')
 
+    def make(self):
+        pass
 
