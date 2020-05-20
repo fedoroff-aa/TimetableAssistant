@@ -21,13 +21,19 @@ class Maker:
                     class_of_students + '-2',
                     class_quantities[class_of_students][1])
                 for (lesson_name, together), study_hours in educational_programs[class_of_students].items():
-                    self.classes[class_of_students + '-1'].add_lesson(lesson_name, together, study_hours)
-                    self.classes[class_of_students + '-2'].add_lesson(lesson_name, together, study_hours)
+                    if study_hours != 0:
+                        self.classes[class_of_students + '-1'].add_lesson(lesson_name, together, study_hours)
+                        self.classes[class_of_students + '-2'].add_lesson(lesson_name, together, study_hours)
 
     def make(self):
         classes_sorted_by_quantity = sorted(self.classes.values(), key=lambda x: x.get_students_quantity())
         for lesson in self.lessons:
+            print(lesson)
             for class_of_students in classes_sorted_by_quantity:
                 if lesson in class_of_students:
                     print(class_of_students[lesson], class_of_students.get_class_name())
+                    if class_of_students[lesson]:  # Together
+                        pass
+                    else:  # apart
+                        pass
             print()
