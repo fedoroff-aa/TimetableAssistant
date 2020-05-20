@@ -31,14 +31,14 @@ class Timetable:
 
 class Class:
 
-    def __init__(self, class_name, students_quantity_group):
+    def __init__(self, class_name, students_quantity):
         self.class_name = class_name
-        self.students_quantity_group = students_quantity_group
-        self.lessons = []
+        self.students_quantity = students_quantity
+        self.lessons = {}
         self.timetable = Timetable(self)
 
     def add_lesson(self, lesson_name: str, study_hours: int, together=False):
-        self.lessons.append([lesson_name, study_hours, together])
+        self.lessons[lesson_name] = [study_hours, together]
 
     def get_class_timetable(self):
         return self.timetable
@@ -49,8 +49,18 @@ class Class:
     def get_lessons(self):
         return self.lessons
 
-    def get_students_quantity_group(self):
-        return self.students_quantity_group
+    def get_students_quantity(self):
+        return self.students_quantity
+
+    def __str__(self):
+        return str(self.lessons)
+
+    def __contains__(self, item):
+        return item in self.lessons
+
+    def __getitem__(self, item):
+        return self.lessons[item]
+
 
 
 class Classroom:
@@ -71,5 +81,7 @@ class Classroom:
 
 
 class Teacher:
-    def __init__(self):
+
+    def __init__(self, name):
+        self.name = name
         self.timetable = Timetable(self)
